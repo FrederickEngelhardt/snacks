@@ -3,6 +3,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const uuid = require('uuid/v4')
 
 app.disable('x-powered-by')
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
@@ -15,7 +16,7 @@ app.get('/dogs', (req, res, next) => {
 })
 
 app.get('/dogs/:id', (req, res, next) => {
-  const id = parseInt(req.params.id)
+  const id = req.params.id
   const dog = dogs.find(dog => dog.id === id)
   if (!dog) return next({ status: 404, message: `Could not find dog with id of ${id}` })
 
@@ -26,13 +27,13 @@ app.post('/dogs', (req, res, next) => {
   const { name, breed } = req.body
   if (!name || !breed) return next({ status: 400, message: `Fields name and breed are required` })
 
-  const dog = { id: dogs.length, name, breed }
+  const dog = { id: uuid(), name, breed }
   dogs.push(dog)
   res.status(201).json({ data: dog })
 })
 
 app.put('/dogs/:id', (req, res, next) => {
-  const id = parseInt(req.params.id)
+  const id = req.params.id
   const dog = dogs.find(dog => dog.id === id)
   if (!dog) return next({ status: 404, message: `Could not find dog with id of ${id}` })
 
@@ -45,7 +46,7 @@ app.put('/dogs/:id', (req, res, next) => {
 })
 
 app.delete('/dogs/:id', (req, res, next) => {
-  const id = parseInt(req.params.id)
+  const id = req.params.id
   const dog = dogs.find(dog => dog.id === id)
   if (!dog) return next({ status: 404, message: `Could not find dog with id of ${id}` })
 

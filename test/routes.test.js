@@ -14,7 +14,7 @@ describe('Dogs Resources', function () {
         .end((err, res) => {
           expect(res.status).to.equal(201)
           expect(res.body.data).to.be.an('object')
-          expect(res.body.data.id).to.be.at.least(0)
+          expect(res.body.data.id).to.be.ok
           expect(res.body.data.name).to.equal(dog.name)
           expect(res.body.data.breed).to.equal(dog.breed)
           done()
@@ -58,7 +58,7 @@ describe('Dogs Resources', function () {
 
           const dog = res.body.data[0]
           expect(dog).to.be.an('object')
-          expect(dog.id).to.be.at.least(0)
+          expect(dog.id).to.be.ok
           done()
         })
     })
@@ -113,7 +113,7 @@ describe('Dogs Resources', function () {
             .end((err, res) => {
               expect(res.status).to.equal(200)
               expect(res.body.data).to.be.an('object')
-              expect(res.body.data.id).to.be.at.least(0)
+              expect(res.body.data.id).to.be.ok
               expect(res.body.data.name).to.equal(newInfo.name)
               expect(res.body.data.breed).to.equal(newInfo.breed)
               done()
