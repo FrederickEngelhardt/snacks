@@ -23,7 +23,7 @@ function create (req, res, next) {
 
 function modify (req, res, next) {
   const id = req.params.id
-  const dog = dogs.find(dog => dog.id === id)
+  const dog = model.dogs.find(dog => dog.id === id)
   if (!dog) return next({ status: 404, message: `Could not find dog with id of ${id}` })
 
   const { name, breed } = req.body
@@ -33,14 +33,14 @@ function modify (req, res, next) {
   dog.breed = breed
   res.status(200).json({ data: dog })
 }
-
 function del (req, res, next) {
+  console.log('REACHED DELETE');
   const id = req.params.id
-  const dog = dogs.find(dog => dog.id === id)
+  const dog = model.dogs.find(dog => dog.id === id)
   if (!dog) return next({ status: 404, message: `Could not find dog with id of ${id}` })
 
-  const index = dogs.indexOf(dog)
-  dogs.splice(index, 1)
+  const index = model.dogs.indexOf(dog)
+  model.dogs.splice(index, 1)
   res.status(204).json()
 }
 
